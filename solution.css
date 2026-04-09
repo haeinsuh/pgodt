@@ -1,0 +1,299 @@
+/* Solution Specific Styles */
+.pt-0 {
+    padding-top: 0 !important;
+}
+
+/* Solutions Grid */
+.solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.solution-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+}
+
+.solution-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    transform: translateY(4px);
+    transition: transform 0.3s ease;
+}
+
+.solution-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(0, 0, 0,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.solution-card:hover::after {
+    transform: translateY(0);
+}
+
+.solution-icon {
+    font-size: 3.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.solution-card:hover .solution-icon {
+    transform: scale(1.1) rotate(5deg);
+    color: var(--text-primary);
+    text-shadow: 0 0 20px var(--accent-blue);
+}
+
+.solution-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.solution-target {
+    font-size: 1rem;
+    color: var(--accent-purple);
+    font-weight: 600;
+    background: rgba(139, 92, 246, 0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.solution-card:hover .solution-target {
+    background: var(--accent-purple);
+    color: var(--text-primary);
+}
+
+/* Flow Diagram */
+.flow-diagram {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, rgba(241, 245, 249,0.5), rgba(255, 255, 255,0.8));
+    border: 1px solid var(--card-border);
+    border-radius: 100px;
+    padding: 3rem 5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 2;
+    cursor: default;
+}
+
+.flow-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0,0.05);
+    border: 2px solid rgba(0, 0, 0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    color: var(--text-secondary);
+    transition: all 0.5s ease;
+}
+
+.flow-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.flow-arrow {
+    font-size: 2rem;
+    color: rgba(0, 0, 0,0.1);
+}
+
+.flow-step:hover .flow-icon {
+    transform: scale(1.1);
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+    background: rgba(0, 0, 0,0.1);
+}
+
+.flow-step:hover .flow-text {
+    color: var(--text-primary);
+}
+
+/* Specific Focus Steps */
+.focus-step .flow-icon {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    background: rgba(59,130,246,0.1);
+    box-shadow: 0 0 30px rgba(59,130,246,0.2);
+}
+
+.focus-step .flow-text {
+    color: var(--text-primary);
+}
+
+.focus-ai .flow-icon {
+    border-color: var(--accent-purple);
+    color: var(--accent-purple);
+    background: rgba(139,92,246,0.1);
+    box-shadow: 0 0 30px rgba(139,92,246,0.2);
+}
+
+.focus-ai .flow-text {
+    color: var(--text-primary);
+}
+
+.final-step .flow-icon {
+    border-color: #34c759;
+    color: #34c759;
+    background: rgba(52,199,89,0.1);
+    box-shadow: 0 0 30px rgba(52,199,89,0.2);
+}
+
+.final-step .flow-text {
+    color: var(--text-primary);
+}
+
+/* Animations for Arrows */
+.flow-arrow i {
+    animation: flowPulse 2s infinite ease-in-out;
+}
+
+@keyframes flowPulse {
+    0% { transform: translateX(0); opacity: 0.3; }
+    50% { transform: translateX(10px); opacity: 1; color: var(--accent-blue); }
+    100% { transform: translateX(0); opacity: 0.3; }
+}
+
+@media (max-width: 1024px) {
+    .solutions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .flow-diagram {
+        flex-direction: column;
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        gap: 2rem;
+    }
+    
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .solutions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Demo Section */
+.bg-secondary {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(20px);
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+.demo-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.demo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(37,99,235,0.08);
+  border-color: rgba(37,99,235,0.3);
+}
+
+.demo-icon {
+  font-size: 2.5rem;
+  color: var(--accent-blue);
+  margin-bottom: 1.5rem;
+  background: rgba(37,99,235,0.05);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.demo-card:hover .demo-icon {
+  background: var(--accent-blue);
+  color: white;
+  transform: scale(1.1);
+}
+
+.demo-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.demo-btn {
+  width: 100%;
+  padding: 0.8rem !important;
+  font-size: 1rem !important;
+  color: var(--text-secondary);
+  border-color: rgba(0,0,0,0.1);
+  font-weight: 600;
+}
+
+.demo-btn:hover {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
+}
+
+@media (max-width: 1024px) {
+  .demo-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .demo-grid { grid-template-columns: repeat(2, 1fr); }
+  .bg-secondary { padding: 2rem !important; }
+}
+@media (max-width: 480px) {
+  .demo-grid { grid-template-columns: 1fr; }
+}
