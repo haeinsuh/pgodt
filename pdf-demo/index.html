@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Utility Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Boxicons for modern icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- jsPDF for creating PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css?v=28">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="main-sidebar">
+            <div class="logo" onclick="window.location.reload()" style="cursor: pointer;" title="새로고침 / 처음으로 돌아가기">
+                <i class='bx bxs-magic-wand'></i>
+                <span>PDF Hub</span>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item" data-target="pdf-viewer">
+                    <i class='bx bxs-file-pdf'></i>
+                    <span>PDF 뷰어</span>
+                </button>
+                <button class="nav-item" data-target="drawing-converter">
+                    <i class='bx bx-images'></i>
+                    <span>도면 변환</span>
+                </button>
+                <button class="nav-item" data-target="file-converter">
+                    <i class='bx bx-transfer'></i>
+                    <span>파일 변환</span>
+                </button>
+                <button class="nav-item" data-target="pdf-compare">
+                    <i class='bx bx-git-compare'></i>
+                    <span>PDF 비교</span>
+                </button>
+                <button class="nav-item" data-target="watermark">
+                    <i class='bx bxs-droplet'></i>
+                    <span>워터마크</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1 id="current-tool-title">PDF 뷰어</h1>
+            </header>
+
+            <!-- PDF Viewer Section (Active by default) -->
+            <section id="pdf-viewer" class="tool-section active">
+                <div class="toolbar glass-panel pdf-toolbar">
+                    <!-- Top row: File controls -->
+                    <div class="toolbar-row file-controls">
+                        <label for="pdf-upload" class="toolbar-btn text-btn">
+                            파일 선택
+                        </label>
+                        <input type="file" id="pdf-upload" accept="application/pdf" hidden>
+                        <span id="file-name-display">선택된 파일 없음</span>
+                    </div>
+
+                    <!-- Bottom row: PDF interactions -->
+                    <div class="toolbar-row action-controls" style="display: none;">
+                        <div class="toolbar-group">
+                            <button class="toolbar-btn icon-btn" id="open-sidebar" title="사이드바 열기"><i class='bx bx-sidebar'></i></button>
+                        </div>
+
+                        <div class="toolbar-group pagination-controls">
+                            <button class="toolbar-btn icon-btn" id="first-page" title="첫 페이지"><i class='bx bx-first-page'></i></button>
+                            <button class="toolbar-btn icon-btn" id="prev-page" title="이전 페이지"><i class='bx bx-chevron-left'></i></button>
+                            <button class="toolbar-btn icon-btn" id="next-page" title="다음 페이지"><i class='bx bx-chevron-right'></i></button>
+                            <button class="toolbar-btn icon-btn" id="last-page" title="마지막 페이지"><i class='bx bx-last-page'></i></button>
+                            
+                            <span class="page-info">
+                                <input type="number" id="page-num" value="1" min="1"> of <span id="page-count">--</span>
+                            </span>
+                        </div>
+
+                        <div class="toolbar-group zoom-controls">
+                            <button class="toolbar-btn icon-btn" id="zoom-out" title="축소"><i class='bx bx-minus-circle'></i></button>
+                            <button class="toolbar-btn icon-btn" id="zoom-in" title="확대"><i class='bx bx-plus-circle'></i></button>
+                            <select id="zoom-select" class="toolbar-select">
+                                <option value="0.5">50%</option>
+                                <option value="0.75">75%</option>
+                                <option value="1" selected>100%</option>
+                                <option value="1.25">125%</option>
+                                <option value="1.5">150%</option>
+                                <option value="2">200%</option>
+                            </select>
+                        </div>
+
+                        <div class="toolbar-group tool-modes">
+                            <button class="toolbar-btn icon-btn" id="mode-pan" title="화면 이동"><i class='bx bx-hand'></i></button>
+                        </div>
+
+                        <div class="toolbar-group history-controls">
+                            <button class="toolbar-btn icon-btn" id="undo" title="실행 취소" disabled><i class='bx bx-undo'></i></button>
+                            <button class="toolbar-btn icon-btn" id="redo" title="다시 실행" disabled><i class='bx bx-redo'></i></button>
+                        </div>
+                        
+                        <div class="toolbar-group form-controls">
+                           <button class="toolbar-btn icon-btn" id="comment-btn" title="댓글 추가"><i class='bx bx-message-rounded'></i></button>
+                        </div>
+
+                        <div class="toolbar-group utility-controls right-align">
+                            <button class="toolbar-btn icon-btn" id="bookmark-btn" title="북마크"><i class='bx bx-bookmark'></i></button>
+                            <button class="toolbar-btn icon-btn" id="print-btn" title="인쇄"><i class='bx bx-printer'></i></button>
+                            <button class="toolbar-btn icon-btn" id="download-btn" title="다운로드"><i class='bx bx-download'></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="viewer-container glass-panel">
+                    <!-- Comment Panel (Hidden by default) -->
+                    <div id="comment-panel" class="comment-panel-container" style="display: none;">
+                        <div class="comment-header">
+                            <h3>댓글</h3>
+                            <button class="toolbar-btn icon-btn" id="comment-close" title="닫기"><i class='bx bx-x'></i></button>
+                        </div>
+                        <div id="comment-list" class="comment-list">
+                            <!-- Comments will appear here -->
+                        </div>
+                        <div class="comment-input-area">
+                            <textarea id="comment-input" placeholder="여기에 댓글을 입력하세요..." rows="3"></textarea>
+                            <button id="add-comment-submit" class="primary-btn">작성</button>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder when no file is loaded -->
+                    <div class="empty-state" id="pdf-empty-state">
+                        <div class="empty-icon"><i class='bx bxs-file-pdf'></i></div>
+                        <h3>PDF 파일을 선택해주세요</h3>
+                        <p>로컬 PC에서 PDF 파일을 불러와 빠르게 확인할 수 있습니다.</p>
+                    </div>
+                    
+                    <!-- Canvas wrapper for rendering -->
+                    <!-- Elements will be dynamically generated here for continuous scrolling -->
+                    <div class="canvas-wrapper" id="canvas-wrapper">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Other Sections (Placeholders) -->
+            <!-- Drawing Converter Section -->
+            <section id="drawing-converter" class="tool-section">
+                <div class="converter-container glass-panel">
+                    <div class="converter-header">
+                        <h2>도면 변환</h2>
+                        <p>캐드 도면 파일(DWG, DXF)을 PDF로 변환합니다.</p>
+                    </div>
+
+                    <div id="drawing-upload-zone" class="upload-zone">
+                        <i class='bx bx-cloud-upload'></i>
+                        <h3>도면 파일(DWG/DXF)을 드래그하여 업로드하세요</h3>
+                        <p>또는 클릭하여 파일을 선택하세요</p>
+                        <input type="file" id="drawing-file-input" multiple accept=".dwg,.dxf" style="display: none;">
+                        <button class="btn btn-primary">파일 선택</button>
+                    </div>
+
+                    <div id="drawing-file-list-container" class="file-list-container" style="display: none;">
+                        <h4>업로드된 도면 <span id="drawing-file-count-badge" class="badge">0</span></h4>
+                        <p class="helper-text">드래그하여 페이지 순서를 변경할 수 있습니다.</p>
+                        <ul id="drawing-file-list" class="file-list">
+                            <!-- Files added via JS -->
+                        </ul>
+                    </div>
+
+                    <div id="drawing-settings" class="converter-settings" style="display: none;">
+                        <div class="setting-group">
+                            <label for="drawing-pdf-format">용지 크기:</label>
+                            <select id="drawing-pdf-format" class="toolbar-select">
+                                <option value="a4">A4 (210 x 297 mm)</option>
+                                <option value="a3">A3 (297 x 420 mm)</option>
+                                <option value="a2">A2 (420 x 594 mm)</option>
+                                <option value="a1">A1 (594 x 841 mm)</option>
+                                <option value="a0">A0 (841 x 1189 mm)</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="drawing-pdf-orientation">방향:</label>
+                            <select id="drawing-pdf-orientation" class="toolbar-select">
+                                <option value="landscape">가로 (Landscape)</option>
+                                <option value="portrait">세로 (Portrait)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-actions">
+                            <button id="clear-drawings-btn" class="btn btn-icon" title="모두 삭제"><i class='bx bx-trash'></i></button>
+                            <button id="generate-drawing-pdf-btn" class="btn btn-primary">
+                                <i class='bx bxs-file-pdf'></i> PDF 생성
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="drawing-conversion-status" class="conversion-status" style="display: none;">
+                        <div class="spinner-icon focus-pulse"><i class='bx bx-loader-alt bx-spin'></i></div>
+                        <div class="success-icon" style="display: none;"><i class='bx bx-check-circle'></i></div>
+                        <p id="drawing-status-text">PDF 변환 중...</p>
+                    </div>
+                </div>
+            </section>
+            <section id="file-converter" class="tool-section">
+                <div class="converter-container glass-panel">
+                    <div class="converter-header">
+                        <h2>이미지/텍스트를 PDF로 변환</h2>
+                        <p>JPG, PNG 이미지 파일과 TXT 텍스트 파일을 업로드하여 하나의 PDF로 병합해 드립니다.</p>
+                    </div>
+
+                    <!-- Drag & Drop Upload Zone -->
+                    <div class="upload-zone" id="converter-upload-zone">
+                        <i class='bx bx-cloud-upload'></i>
+                        <h3>파일을 여기로 드래그 앤 드롭 하세요</h3>
+                        <p>또는 클릭하여 파일을 선택할 수 있습니다.</p>
+                        <input type="file" id="converter-file-input" multiple accept="image/png, image/jpeg, image/jpg, .txt" hidden>
+                        <button class="primary-btn mt-1" onclick="document.getElementById('converter-file-input').click()">파일 찾아보기</button>
+                    </div>
+
+                    <!-- File Settings (Page Size, Orientation) -->
+                    <div class="converter-settings" id="converter-settings" style="display: none;">
+                        <div class="setting-group">
+                            <label>페이지 방향:</label>
+                            <select id="pdf-orientation" class="toolbar-select">
+                                <option value="p">세로 (Portrait)</option>
+                                <option value="l">가로 (Landscape)</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label>페이지 크기:</label>
+                            <select id="pdf-format" class="toolbar-select">
+                                <option value="a4">A4</option>
+                                <option value="letter">Letter</option>
+                                <option value="legal">Legal</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-actions">
+                             <button id="clear-files-btn" class="toolbar-btn text-btn">전체 초기화</button>
+                             <button id="generate-pdf-btn" class="primary-btn focus-pulse"><i class='bx bxs-file-pdf'></i> PDF 생성</button>
+                        </div>
+                    </div>
+
+                    <!-- Selected Files List -->
+                    <div class="file-list-container" id="file-list-container" style="display: none;">
+                        <h4>업로드된 파일 목록 <span id="file-count-badge" class="badge">0</span></h4>
+                        <p class="helper-text">마우스로 드래그하여 파일 순서를 변경할 수 있습니다. 이미지가 들어갈 페이지 순서입니다.</p>
+                        <ul class="file-list" id="converter-file-list">
+                            <!-- File items will be injected here -->
+                        </ul>
+                    </div>
+                    
+                    <!-- Loading / Success State -->
+                    <div class="conversion-status" id="conversion-status" style="display: none;">
+                        <div class="spinner-icon"><i class='bx bx-loader-alt bx-spin'></i></div>
+                        <div class="success-icon" style="display: none;"><i class='bx bx-check-circle'></i></div>
+                        <h3 id="status-text">PDF 변환 중...</h3>
+                    </div>
+                </div>
+            </section>
+            <section id="pdf-compare" class="tool-section">
+                <!-- Setup Screen (File Uploads) -->
+                <div id="compare-setup" class="compare-setup-container glass-panel">
+                    <div class="converter-header">
+                        <h2>PDF 문서 비교 (Side-by-Side)</h2>
+                        <p>두 개의 PDF 파일을 나란히 띄워놓고 동시에 스크롤/확대하며 차이점을 비교해 보세요.</p>
+                    </div>
+                    
+                    <div class="compare-upload-wrapper">
+                        <!-- Original PDF -->
+                        <div class="upload-zone compare-zone" id="compare-zone-1">
+                            <h3>원본 파일 (Original)</h3>
+                            <i class='bx bxs-file-pdf'></i>
+                            <p>원본 PDF를 드래그 앤 드롭</p>
+                            <input type="file" id="compare-file-1" accept="application/pdf" hidden>
+                            <button class="toolbar-btn text-btn mt-1" onclick="document.getElementById('compare-file-1').click()">업로드</button>
+                            <div class="compare-file-status" id="compare-status-1">선택된 파일 없음</div>
+                        </div>
+
+                        <!-- Modified PDF -->
+                        <div class="upload-zone compare-zone" id="compare-zone-2">
+                            <h3>비교 파일 (Modified)</h3>
+                            <i class='bx bxs-file-pdf'></i>
+                            <p>수정된 PDF를 드래그 앤 드롭</p>
+                            <input type="file" id="compare-file-2" accept="application/pdf" hidden>
+                            <button class="toolbar-btn text-btn mt-1" onclick="document.getElementById('compare-file-2').click()">업로드</button>
+                            <div class="compare-file-status" id="compare-status-2">선택된 파일 없음</div>
+                        </div>
+                    </div>
+
+                    <div class="compare-actions">
+                        <button id="start-compare-btn" class="primary-btn disabled" disabled>비교 시작</button>
+                    </div>
+                </div>
+
+                <!-- Compare Screen (Split View) -->
+                <div id="compare-viewer" class="compare-viewer-container" style="display: none;">
+                    <!-- Shared Toolbar -->
+                    <div class="shared-toolbar glass-panel">
+                        <button class="toolbar-btn text-btn" id="exit-compare-btn"><i class='bx bx-arrow-back'></i> 뒤로 가기</button>
+                        
+                        <div class="toolbar-group compare-controls">
+                            <span class="toolbar-label">공용 줌:</span>
+                            <button class="toolbar-btn icon-btn" id="compare-zoom-out" title="축소"><i class='bx bx-minus'></i></button>
+                            <select id="compare-zoom-select" class="toolbar-select">
+                                <option value="0.5">50%</option>
+                                <option value="0.75">75%</option>
+                                <option value="1" selected>100%</option>
+                                <option value="1.25">125%</option>
+                                <option value="1.5">150%</option>
+                                <option value="2">200%</option>
+                            </select>
+                            <button class="toolbar-btn icon-btn" id="compare-zoom-in" title="확대"><i class='bx bx-plus'></i></button>
+                        </div>
+
+                        <div class="toolbar-group compare-sync">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="sync-scroll-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="toolbar-label">스크롤 동기화</span>
+                        </div>
+
+                        <div class="toolbar-group compare-sync">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="diff-highlight-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="toolbar-label" style="color: #ffd600; font-weight: 700; display:flex; align-items:center; gap:4px;"><i class='bx bx-highlight'></i> 차이 강조</span>
+                        </div>
+                    </div>
+
+                    <!-- Split Canvas Area -->
+                    <div class="split-view">
+                        <!-- Left View -->
+                        <div class="split-pane pane-left" id="compare-pane-1">
+                            <div class="pane-header">
+                                <span class="pane-title">원본: <span id="pane-title-1"></span></span>
+                                <span class="pane-pages">Page <span id="compare-page-1">1</span> / <span id="compare-total-1">1</span></span>
+                            </div>
+                            <div class="pane-content custom-scrollbar" id="compare-scroll-1">
+                                <div id="compare-render-1" class="compare-render-area"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Divider -->
+                        <div class="split-divider"></div>
+
+                        <!-- Right View -->
+                        <div class="split-pane pane-right" id="compare-pane-2">
+                             <div class="pane-header">
+                                <span class="pane-title">비교본: <span id="pane-title-2"></span></span>
+                                <span class="pane-pages">Page <span id="compare-page-2">1</span> / <span id="compare-total-2">1</span></span>
+                            </div>
+                            <div class="pane-content custom-scrollbar" id="compare-scroll-2">
+                                <div id="compare-render-2" class="compare-render-area"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="watermark" class="tool-section">
+                <div class="watermark-container glass-panel">
+                    <div class="converter-header">
+                        <h2>PDF 워터마크</h2>
+                        <p>PDF 파일에 텍스트 워터마크를 삽입하여 다운로드할 수 있습니다.</p>
+                    </div>
+
+                    <!-- Two-column layout -->
+                    <div class="watermark-layout">
+                        <!-- LEFT: Settings -->
+                        <div class="watermark-settings-panel">
+
+                            <!-- Step 1: Upload -->
+                            <div class="wm-step">
+                                <div class="wm-step-label"><i class='bx bx-upload'></i> 1. PDF 업로드</div>
+                                <div class="upload-zone wm-upload-zone" id="wm-upload-zone">
+                                    <i class='bx bxs-file-pdf'></i>
+                                    <p>PDF를 드래그하거나 클릭하세요</p>
+                                    <input type="file" id="wm-file-input" accept="application/pdf" hidden>
+                                </div>
+                                <div id="wm-file-name" class="wm-file-name" style="display:none;"></div>
+                            </div>
+
+                            <!-- Step 2: Watermark Text -->
+                            <div class="wm-step">
+                                <div class="wm-step-label"><i class='bx bx-text'></i> 2. 워터마크 텍스트</div>
+                                <input type="text" id="wm-text" class="wm-input" placeholder="워터마크 텍스트 입력" value="CONFIDENTIAL">
+                            </div>
+
+                            <!-- Step 3: Options -->
+                            <div class="wm-step">
+                                <div class="wm-step-label"><i class='bx bx-slider'></i> 3. 옵션 설정</div>
+                                <div class="wm-options-grid">
+                                    <div class="wm-option-group">
+                                        <label>글자 크기</label>
+                                        <div class="wm-slider-row">
+                                            <input type="range" id="wm-font-size" min="20" max="250" value="80" class="wm-slider">
+                                            <input type="number" id="wm-font-size-num" value="80" min="20" max="250" class="wm-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="wm-option-group">
+                                        <label>투명도 (%)</label>
+                                        <div class="wm-slider-row">
+                                            <input type="range" id="wm-opacity" min="0" max="100" value="30" class="wm-slider">
+                                            <input type="number" id="wm-opacity-num" value="30" min="0" max="100" class="wm-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="wm-option-group">
+                                        <label>회전 각도 (°)</label>
+                                        <div class="wm-slider-row">
+                                            <input type="range" id="wm-rotation" min="-180" max="180" value="-45" class="wm-slider">
+                                            <input type="number" id="wm-rotation-num" value="-45" min="-180" max="180" class="wm-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="wm-option-group">
+                                        <label>글자 색상</label>
+                                        <input type="color" id="wm-color" value="#888888" class="wm-color-picker">
+                                    </div>
+                                    <div class="wm-option-group">
+                                        <label>가로 간격 (px)</label>
+                                        <div class="wm-slider-row">
+                                            <input type="range" id="wm-spacing-x" min="10" max="1000" value="300" class="wm-slider">
+                                            <input type="number" id="wm-spacing-x-num" value="300" min="10" max="1000" class="wm-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="wm-option-group">
+                                        <label>세로 간격 (px)</label>
+                                        <div class="wm-slider-row">
+                                            <input type="range" id="wm-spacing-y" min="10" max="1000" value="200" class="wm-slider">
+                                            <input type="number" id="wm-spacing-y-num" value="200" min="10" max="1000" class="wm-number-input">
+                                        </div>
+                                    </div>
+                                    <div class="wm-option-group">
+                                        <label>배치 방식</label>
+                                        <select id="wm-layout" class="toolbar-select" style="width:100%;">
+                                            <option value="diagonal-repeat">대각선 반복</option>
+                                            <option value="center">중앙 1개</option>
+                                            <option value="grid">격자 반복</option>
+                                        </select>
+                                    </div>
+                                    <div class="wm-option-group">
+                                        <label>적용 페이지</label>
+                                        <select id="wm-pages" class="toolbar-select" style="width:100%;">
+                                            <option value="all">전체 페이지</option>
+                                            <option value="first">첫 페이지만</option>
+                                            <option value="odd">홀수 페이지</option>
+                                            <option value="even">짝수 페이지</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="wm-actions">
+                                <button id="wm-download-btn" class="primary-btn focus-pulse" disabled>
+                                    <i class='bx bx-download'></i> 다운로드
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: Preview -->
+                        <div class="watermark-preview-panel">
+                            <div class="wm-preview-header">
+                                <span>미리보기 <span id="wm-preview-page-info" style="font-size:0.8em; opacity:0.6;"></span></span>
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div class="wm-fit-control">
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="wm-fit-toggle" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: #64748b;">전체 보기</span>
+                                    </div>
+                                    <div class="wm-preview-nav" id="wm-preview-nav" style="display:none;">
+                                        <button class="toolbar-btn icon-btn" id="wm-prev-page"><i class='bx bx-chevron-left'></i></button>
+                                        <span id="wm-cur-page">1</span> / <span id="wm-total-pages">1</span>
+                                        <button class="toolbar-btn icon-btn" id="wm-next-page"><i class='bx bx-chevron-right'></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wm-preview-area" id="wm-preview-area">
+                                <div class="empty-state" id="wm-empty-state">
+                                    <div class="empty-icon"><i class='bx bxs-file-pdf'></i></div>
+                                    <h3>PDF를 업로드하면<br>미리보기가 표시됩니다</h3>
+                                </div>
+                                <canvas id="wm-preview-canvas" style="display:none; max-width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.2);"></canvas>
+                                <div class="wm-loading" id="wm-loading" style="display:none;">
+                                    <i class='bx bx-loader-alt bx-spin'></i>
+                                    <span>처리 중...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js?v=31"></script>
+    <script src="pdf-viewer.js?v=31"></script>
+    <script src="file-converter.js?v=31"></script>
+    <script src="pdf-compare.js?v=31"></script>
+    <script src="watermark.js?v=31"></script>
+    <script src="drawing-converter.js?v=31"></script>
+</body>
+</html>

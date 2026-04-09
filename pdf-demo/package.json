@@ -1,0 +1,22 @@
+{
+  "name": "pdf-utility-hub",
+  "version": "1.0.0",
+  "description": "Multi-purpose toolkit for PDF files including Viewer, Splitter, Merger, and Watermark.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "author": "Antigravity",
+  "license": "ISC",
+  "build": {
+    "appId": "com.antigravity.pdfutilityhub",
+    "win": {
+      "target": "portable"
+    }
+  },
+  "devDependencies": {
+    "electron": "^29.1.5",
+    "electron-builder": "^24.13.3"
+  }
+}
