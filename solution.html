@@ -1,12 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>솔루션 - PGO데이터기술</title>
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="PGO데이터기술의 검증된 솔루션">
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="PGO데이터기술의 검증된 기술자료 조회, AI, PLM 문서 처리 솔루션을 경험해 보세요.">
+    <link rel="stylesheet" href="styles.css?v=8">
     <link rel="stylesheet" href="solution.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,8 +17,7 @@
     <!-- Header -->
     <header>
         <div class="container header-inner">
-            <a href="index.html" class="logo">PGO데이터기술</a>
-            <nav class="nav-links">
+            <a href="index.html" class="logo"><img src="images/logo.png" alt="PGO Data Technology" class="nav-logo"></a>            <nav class="nav-links">
                 <div class="dropdown">
                     <a href="company.html" class="dropbtn" >회사소개 <i class="fa-solid fa-chevron-down"></i></a>
                     <div class="dropdown-content">
@@ -34,7 +32,7 @@
                     <div class="dropdown-content">
                         <a href="service.html?tab=tab-1">국방 데이터 정비</a>
                         <a href="service.html?tab=tab-2">PLM/PDM 고도화</a>
-                        <a href="service.html?tab=tab-3">AI 기술자료 활용</a>
+                        <a href="service.html?tab=tab-3">AI 기술자료 적용</a>
                         <a href="service.html?tab=tab-4">문서·도면 자동화</a>
                         <a href="service.html?tab=tab-5">산업 데이터 서비스</a>
                     </div>
@@ -128,37 +126,17 @@
     <!-- Diagram Area -->
     <section class="section pt-0">
         <div class="container fade-up">
-            <h2 class="services-title" style="margin-bottom: 3rem;">데이터 통합 파이프라인 구조</h2>
+            <h2 class="services-title">아키텍처 확장성</h2>
             <div class="flow-diagram">
-                <div class="flow-step">
-                    <div class="flow-icon"><i class="fa-solid fa-database"></i></div>
-                    <div class="flow-text">데이터</div>
-                </div>
+                <div class="flow-box">데이터 수집 및 정제</div>
                 <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
-                <div class="flow-step">
-                    <div class="flow-icon"><i class="fa-solid fa-filter"></i></div>
-                    <div class="flow-text">정비</div>
-                </div>
+                <div class="flow-box">PLM 엔진 / AI 검증</div>
                 <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
-                <div class="flow-step focus-step">
-                    <div class="flow-icon"><i class="fa-solid fa-network-wired"></i></div>
-                    <div class="flow-text" style="color:var(--text-primary);">PLM</div>
-                </div>
-                <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
-                <div class="flow-step focus-ai">
-                    <div class="flow-icon"><i class="fa-solid fa-brain"></i></div>
-                    <div class="flow-text" style="color:var(--text-primary);">AI</div>
-                </div>
-                <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
-                <div class="flow-step final-step">
-                    <div class="flow-icon"><i class="fa-solid fa-chart-line"></i></div>
-                    <div class="flow-text" style="color:var(--text-primary);">활용</div>
-                </div>
+                <div class="flow-box">사용자 포털 및 대시보드</div>
             </div>
         </div>
     </section>
 
-    <!-- Scroll Animation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {
@@ -169,7 +147,6 @@
                     }
                 });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         });
     </script>
@@ -187,5 +164,8 @@
             </div>
         </div>
     </footer>
+    <script src="mobile-menu.js"></script>
 </body>
 </html>
+
+

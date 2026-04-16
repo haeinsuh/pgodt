@@ -31,7 +31,7 @@
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
     transform: translateY(4px);
     transition: transform 0.3s ease;
 }
@@ -196,23 +196,34 @@
     .solutions-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
     .flow-diagram {
         flex-direction: column;
         border-radius: 20px;
-        padding: 4rem 2rem;
-        gap: 2rem;
+        padding: 3rem 2rem;
+        gap: 1.5rem;
     }
-    
-    .flow-arrow {
-        transform: rotate(90deg);
-    }
+    .flow-arrow { transform: rotate(90deg); }
+    .flow-icon { width: 70px; height: 70px; font-size: 1.8rem; }
+    .flow-text { font-size: 1.1rem; }
 }
 
-@media (max-width: 600px) {
-    .solutions-grid {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 768px) {
+    .solutions-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .solution-card { padding: 2rem 1.5rem; }
+    .solution-icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+    .solution-title { font-size: 1.2rem; }
+    .flow-diagram { padding: 2rem 1.5rem; border-radius: 16px; }
+    .flow-icon { width: 60px; height: 60px; font-size: 1.5rem; }
+    .flow-text { font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+    .solution-card { padding: 1.5rem 1.2rem; }
+    .solution-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .solution-title { font-size: 1.1rem; }
+    .flow-diagram { padding: 1.5rem 1.2rem; gap: 1rem; }
+    .flow-icon { width: 50px; height: 50px; font-size: 1.3rem; }
+    .flow-text { font-size: 0.95rem; }
 }
 
 /* Demo Section */
@@ -292,8 +303,10 @@
 }
 @media (max-width: 768px) {
   .demo-grid { grid-template-columns: repeat(2, 1fr); }
-  .bg-secondary { padding: 2rem !important; }
+  .bg-secondary { padding: 2.5rem 1.5rem !important; }
 }
 @media (max-width: 480px) {
   .demo-grid { grid-template-columns: 1fr; }
+  .demo-card { padding: 1.5rem 1rem; }
+  .demo-icon { width: 60px; height: 60px; font-size: 2rem; margin-bottom: 1rem; }
 }

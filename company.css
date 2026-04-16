@@ -4,12 +4,17 @@
 .text-center { text-align: center; }
 .mt-lg { margin-top: 4rem; }
 
+/* Overall rhythm for company page */
+.section.container {
+    max-width: 1160px;
+}
+
 /* 2. Overview */
 .overview-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    margin-top: 4rem;
+    margin-top: 2.6rem;
 }
 
 .overview-card {
@@ -19,7 +24,12 @@
     border-radius: 20px;
     text-align: center;
     backdrop-filter: blur(10px);
-    transition: all 0.4s ease;
+    transition: all 0.35s ease;
+    height: 100%;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .overview-card:hover {
@@ -44,6 +54,7 @@
 .overview-desc {
     color: var(--text-secondary);
     font-size: 1.1rem;
+    line-height: 1.7;
 }
 
 /* 3. Mission & Vision */
@@ -58,6 +69,7 @@
     grid-template-columns: 1.25fr 1fr;
     gap: 4rem;
     align-items: center;
+    max-width: 1140px;
 }
 
 .mission-box {
@@ -105,7 +117,7 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
 
 .v-card:hover {
@@ -135,6 +147,7 @@
 
 .v-desc {
     color: var(--text-secondary);
+    line-height: 1.65;
 }
 
 /* 4. Core Values */
@@ -142,7 +155,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1.5rem;
-    margin-top: 3rem;
+    margin-top: 2.4rem;
 }
 
 .value-card {
@@ -152,6 +165,10 @@
     border-radius: 20px;
     text-align: center;
     transition: all 0.3s ease;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .value-card:hover {
@@ -176,6 +193,7 @@
 .value-desc {
     color: var(--text-secondary);
     font-size: 1rem;
+    line-height: 1.65;
 }
 
 /* 5. Business Areas */
@@ -183,14 +201,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    margin-top: 3rem;
+    margin-top: 2.4rem;
 }
 
 .biz-card {
     background: linear-gradient(180deg, rgba(59,130,246,0.05) 0%, rgba(0, 0, 0,0) 100%);
     border: 1px solid rgba(0, 0, 0,0.1);
     border-radius: 24px;
-    padding: 3rem;
+    padding: 2.6rem;
 }
 
 .biz-card:last-child {
@@ -198,9 +216,10 @@
 }
 
 .biz-title {
-    font-size: 2rem;
+    font-size: 1.85rem;
     color: var(--accent-blue);
     margin-bottom: 0.5rem;
+    line-height: 1.3;
 }
 
 .biz-subtitle {
@@ -220,8 +239,9 @@
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.2rem;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     color: var(--text-primary);
+    line-height: 1.55;
 }
 
 .biz-list li i {
@@ -245,14 +265,15 @@
     grid-template-columns: 1.5fr 1fr;
     gap: 4rem;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 2.4rem;
 }
 
 .info-table-container {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 20px;
-    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .info-table {
@@ -265,7 +286,7 @@
     padding: 1.5rem 2rem;
     color: var(--text-secondary);
     border-bottom: 1px solid rgba(0, 0, 0,0.05);
-    background: rgba(0,0,0,0.2);
+    background: rgba(15,23,42,0.06);
     width: 30%;
     font-weight: 500;
 }
@@ -285,13 +306,14 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    align-self: stretch;
 }
 
 .stat-box {
     background: rgba(59,130,246,0.05);
     border: 1px solid rgba(59,130,246,0.2);
     border-radius: 20px;
-    padding: 3rem 2rem;
+    padding: 2.4rem 1.6rem;
     text-align: center;
     transition: all 0.3s ease;
 }
@@ -318,7 +340,7 @@
 .timeline {
     position: relative;
     max-width: 900px;
-    margin: 4rem auto 0;
+    margin: 2.8rem auto 0;
     padding-left: 3rem;
 }
 
@@ -329,20 +351,23 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+    background: var(--accent-blue);
     opacity: 0.5;
 }
 
 .timeline-item {
     position: relative;
-    margin-bottom: 3rem;
+    margin-bottom: 2.4rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;
 }
 
 .timeline-item::before {
     content: '';
     position: absolute;
     left: -3rem;
-    top: 5px;
+    top: 8px;
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -361,12 +386,14 @@
     font-size: 2rem;
     font-weight: 800;
     color: var(--accent-blue);
-    margin-bottom: 1rem;
+    min-width: 5rem;
+    flex-shrink: 0;
+    padding: 0.2rem 0 0 1rem;
 }
 
 .timeline-content {
     background: rgba(0, 0, 0,0.02);
-    padding: 2rem;
+    padding: 1.7rem;
     border-radius: 16px;
     border: 1px solid rgba(0, 0, 0,0.05);
     transition: all 0.3s ease;
@@ -379,46 +406,68 @@
 
 .timeline-content p {
     color: var(--text-primary);
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
+    line-height: 1.65;
 }
 
 .timeline-content p:last-child {
     margin-bottom: 0;
 }
 
+.category-label {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+    background: rgba(37, 99, 235, 0.08);
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    border-radius: 20px;
+    padding: 0.15rem 0.7rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
 /* 8. CI Section */
 .ci-grid {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
-    gap: 5rem;
+    gap: 3.5rem;
     align-items: center;
     background: linear-gradient(135deg, rgba(241, 245, 249,0.8), rgba(255, 255, 255,0.9));
-    padding: 5rem;
+    padding: 3.2rem;
     border-radius: 30px;
-    margin-top: 3rem;
+    margin-top: 2.4rem;
     border: 1px solid rgba(0, 0, 0,0.1);
 }
 
+.ci-image-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
 .ci-image {
-    text-align: center;
-    font-size: 10rem;
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 20px rgba(59,130,246,0.5));
+    width: min(100%, 360px);
+    height: auto;
+    object-fit: contain;
 }
 
 .ci-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
     color: var(--text-primary);
 }
 
 .ci-desc {
-    font-size: 1.2rem;
+    font-size: 1.08rem;
     color: var(--text-secondary);
     line-height: 1.8;
 }
@@ -428,14 +477,14 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    margin-top: 3rem;
-    margin-bottom: 4rem;
+    margin-top: 2.4rem;
+    margin-bottom: 3rem;
 }
 
 .career-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    padding: 3.5rem 2rem;
+    padding: 2.6rem 1.8rem;
     border-radius: 20px;
     text-align: center;
     transition: all 0.3s ease;
@@ -462,37 +511,108 @@
 
 .career-desc {
     color: var(--text-secondary);
-    font-size: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.65;
 }
 
-/* Responsive Styles */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-    .overview-grid, .values-grid, .careers-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .mv-grid, .info-grid, .ci-grid, .business-grid {
-        gap: 3rem;
-    }
+    .overview-grid { grid-template-columns: repeat(2, 1fr); }
+    .values-grid { grid-template-columns: repeat(3, 1fr); }
+    .careers-grid { grid-template-columns: repeat(2, 1fr); }
+    .mv-grid, .info-grid, .business-grid { gap: 2rem; }
+    .ci-grid { gap: 2.2rem; padding: 2.2rem; }
+    .overview-card { min-height: 240px; }
+    .value-card { min-height: 220px; }
 }
 
 @media (max-width: 768px) {
-    .overview-grid, .careers-grid {
+    .overview-grid { grid-template-columns: 1fr; gap: 1rem; margin-top: 1.6rem; }
+    .overview-card { padding: 2rem 1.5rem; }
+    .overview-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .overview-title { font-size: 1.2rem; }
+    .overview-card { min-height: auto; }
+
+    .mv-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
-    .values-grid {
+    .mission-box {
+        padding: 1.5rem 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .vision-box { 
+        padding: 1.5rem 0; 
+        text-align: center;
+    }
+    .mission-text { font-size: 1.05rem; }
+    .mission-line { white-space: normal; word-break: keep-all; }
+    
+    .v-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .values-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.6rem; }
+    .value-card { padding: 1.5rem 1rem; }
+    .value-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .value-title { font-size: 1rem; }
+    .value-card { min-height: auto; }
+
+    .business-grid { grid-template-columns: 1fr; gap: 1.2rem; margin-top: 1.6rem; }
+    .biz-card { padding: 1.5rem; }
+    .biz-title { font-size: 1.5rem; }
+    .biz-list li { font-size: 1rem; }
+
+    .info-grid { grid-template-columns: 1fr; gap: 1.2rem; margin-top: 1.6rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-box { padding: 1.5rem 1rem; }
+    .stat-num { font-size: 2.5rem; }
+    .info-table th { width: 35%; padding: 0.8rem 1rem; font-size: 0.85rem; }
+    .info-table td { padding: 0.8rem 1rem; font-size: 0.9rem; }
+
+    .timeline { padding-left: 2rem; margin: 1.8rem auto 0; }
+    .timeline::before { left: 4px; }
+    .timeline-item {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-bottom: 2.2rem;
+    }
+    .timeline-item::before { left: -22px; width: 16px; height: 16px; }
+    .timeline-year { font-size: 1.5rem; min-width: unset; margin-bottom: 0 !important; }
+    .timeline-content { padding: 1.2rem; }
+    .timeline-content p { font-size: 0.95rem; }
+
+    .ci-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.8rem 1.3rem;
+        border-radius: 16px;
     }
-    .mv-grid, .info-grid, .ci-grid, .business-grid {
-        grid-template-columns: 1fr;
-    }
-    .mission-box, .vision-box, .ci-grid {
-        padding: 2rem;
-        border: none;
-    }
-    .info-table th, .info-table td {
-        padding: 1rem;
-    }
-    .ci-image {
-        font-size: 6rem;
-    }
+    .ci-image-wrap { padding: 0; border-radius: 0; }
+    .ci-image { width: min(100%, 300px); }
+    .ci-title { font-size: 1.8rem; }
+    .ci-desc { font-size: 1rem; }
+
+    .careers-grid { grid-template-columns: 1fr; gap: 1rem; margin-top: 1.6rem; }
+    .career-card { padding: 2rem 1.5rem; }
+    .career-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .career-title { font-size: 1.2rem; }
+}
+
+@media (max-width: 480px) {
+    .values-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .ci-image-wrap { padding: 0; border-radius: 0; }
+    .ci-image { width: min(100%, 240px); }
+    .stat-num { font-size: 2rem; }
+    .timeline-content { padding: 1rem; }
+    .timeline-content p { font-size: 0.9rem; }
+    /* 400px대: px 고정 */
+    .timeline-item { gap: 0.8rem; margin-bottom: 2.5rem; }
+    .timeline-year { font-size: 1.3rem; }
 }
