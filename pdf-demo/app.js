@@ -3,6 +3,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.tool-section');
     const currentToolTitle = document.getElementById('current-tool-title');
 
+    // --- Mobile Sidebar Toggle ---
+    const sidebar = document.getElementById('main-sidebar');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('active');
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('active');
+    }
+
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+    }
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebar);
+    }
+
     console.log('Hub initialized. Navigation items:', navItems.length, 'Sections:', sections.length);
 
     function switchSection(targetId, item) {
@@ -38,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!matchFound) {
             console.error('No section found with ID:', targetId);
         }
+
+        // Close sidebar on mobile after navigation
+        closeSidebar();
     }
 
     navItems.forEach(item => {
@@ -64,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         switchSection(targetItem.getAttribute('data-target'), targetItem);
     }
 });
+
 
 /**
  * Unified robust PDF download function

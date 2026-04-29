@@ -15,7 +15,7 @@
     <!-- jsPDF for creating PDFs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="style.css?v=28">
+    <link rel="stylesheet" href="style.css?v=29">
 </head>
 <body>
     <div class="app-container">
@@ -52,6 +52,9 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <header class="topbar">
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="메뉴 열기">
+                    <i class='bx bx-menu'></i>
+                </button>
                 <h1 id="current-tool-title">PDF 뷰어</h1>
             </header>
 
@@ -502,13 +505,15 @@
             </section>
         </main>
     </div>
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <!-- Scripts -->
-    <script src="app.js?v=31"></script>
-    <script src="pdf-viewer.js?v=31"></script>
-    <script src="file-converter.js?v=31"></script>
-    <script src="pdf-compare.js?v=31"></script>
-    <script src="watermark.js?v=31"></script>
-    <script src="drawing-converter.js?v=31"></script>
+    <script src="app.js?v=32"></script>
+    <script src="pdf-viewer.js?v=32"></script>
+    <script src="file-converter.js?v=32"></script>
+    <script src="pdf-compare.js?v=32"></script>
+    <script src="watermark.js?v=32"></script>
+    <script src="drawing-converter.js?v=32"></script>
 </body>
 </html>
